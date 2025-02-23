@@ -1,10 +1,10 @@
 import { pool } from "../db/connectdb";
-import { getSingleChargePointQuery, stopSessionQuery } from "./queries";
+import { getAllSessionsForUserQuery, stopSessionQuery } from "./queries";
 
 
-export const getSingleChargePoint = async(charge_point_id)=> {
-    const query = getSingleChargePointQuery();
-    const values = [charge_point_id]
+export const getAllSessionsForUser = async(user_id)=> {
+    const query = getAllSessionsForUserQuery();
+    const values = [user_id]
     let result;
     try{
      result =await pool.query(query,values);
@@ -12,7 +12,7 @@ export const getSingleChargePoint = async(charge_point_id)=> {
     catch(err){
         console.log(err);
     }
-    return result.rows.length > 0 ? result.rows[0] : null;
+    return result.rows.length > 0 ? result.rows : null;
 }
 
 

@@ -1,23 +1,23 @@
 import { Router, Request, Response } from "express";
-import {  validateSessionId } from "./validator";
-import { getSingleChargePoint, stopSession } from "./controller";
+import {  validateSessionId, validateUserId } from "./validator";
+import { getAllSessionsForUser, stopSession } from "./controller";
 
 export const sessionRouter = Router();
 
 
-const getSingleChargePointService = async (req: Request, res: Response) => {
+const getAllSessionsForUserService = async (req: Request, res: Response) => {
     try {
-        const charge_point_id = req.params.id;
-        const result = await getSingleChargePoint(charge_point_id);
+        const user_id = req.params.id;
+        const result = await getAllSessionsForUser(user_id);
         if (!result) {
-            res.status(400).json({ error: true, code: 400, data: null, message: "Charge Point Not Found" });
+            res.status(400).json({ error: true, code: 400, data: null, message: "Error fetchin Session" });
             return;
         }
         res.status(200).json({
             error: false,
             code: 200,
             data: result,
-            message: "Charge Point  fetched successfully"
+            message: "Sessions  fetched successfully"
         });
 
     }
@@ -56,3 +56,4 @@ const stopSessionService = async (req: Request, res: Response) => {
 
 
 sessionRouter.patch("/:id",validateSessionId,stopSessionService)
+sessionRouter.get("/user/:id",validateUserId,getAllSessionsForUserService)

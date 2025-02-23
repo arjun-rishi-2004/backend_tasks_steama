@@ -1,8 +1,8 @@
 
-export const getSingleChargePointQuery = () =>{
+export const getAllSessionsForUserQuery = () =>{
     let query = 
     `
-    SELECT * FROM charge_points Where id = $1`
+    SELECT * FROM sessions Where user_id = $1`
     return query;
 }
 
